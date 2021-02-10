@@ -11,11 +11,10 @@ class BaseModel:
         """ Init """
         if kwargs:
             for key, item in kwargs.items():
-                if key in ['create_at', 'update_at']:
-                    self.key = datetime.strptime(str(item), "%Y-%m-%d %H:%M:%S.%f")
-                else:
-                    print(key)
-                    self.key = item
+                if key in ['created_at', 'update_at']:
+                    item = datetime.strptime(str(item), "%Y-%m-%dT%H:%M:%S.%f")
+                if key not in ['__class__']:
+                    setattr(self, key, item)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -32,7 +31,7 @@ class BaseModel:
         """ Dictionary containing all key/values """
         dictionary = {}
         for key, item in self.__dict__.items():
-            if key in ['updated_at', 'created_at']:
+            if key in ['update_at', 'created_at']:
                 dictionary[key] = item.isoformat()
             else:
                 dictionary[key] = item
