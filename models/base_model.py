@@ -9,9 +9,9 @@ class BaseModel:
     
     def __init__(self):
         """ Init """
-        self.id = uuid.uuid4()
-        self.created_at = datetime.now()
-        self.update_at = datetime.now()
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now().isoformat()
+        self.update_at = datetime.now().isoformat()
 
     def __str__(self):
         return "[{}] ({}) {}".\
@@ -22,4 +22,14 @@ class BaseModel:
 
     def to_dict(self):
         """ Dictionary containing all key/values """
+        
+        dictionary = {
+                    "my_number": self.my_number,
+                    "name": self.name,
+                    "__class__": type(self),
+                    "updated_at": self.update_at,
+                    "id": self.id,
+                    "created_at": self.created_at
+                    }
+        return dictionary
 
