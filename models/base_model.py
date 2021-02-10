@@ -10,8 +10,8 @@ class BaseModel:
     def __init__(self):
         """ Init """
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now().isoformat()
-        self.update_at = datetime.now().isoformat()
+        self.created_at = datetime.now()
+        self.update_at = datetime.now()
 
     def __str__(self):
         return "[{}] ({}) {}".\
@@ -22,14 +22,12 @@ class BaseModel:
 
     def to_dict(self):
         """ Dictionary containing all key/values """
-        
-        dictionary = {
-                    "my_number": self.my_number,
-                    "name": self.name,
-                    "__class__": type(self),
-                    "updated_at": self.update_at,
-                    "id": self.id,
-                    "created_at": self.created_at
-                    }
+        dictionary = {}
+        for key, item in self.__dict__.items():
+            if key in ['updated_at', 'created_at']:
+                dictionary[key] = item.isoformat()
+            else:
+                dictionary[key] = item
+        dictionary['__class__'] = self.__class__.__name__
         return dictionary
 
