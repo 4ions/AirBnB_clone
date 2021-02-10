@@ -20,3 +20,6 @@ class BaseModel:
     def save(self):
         self.update_at = datetime.now()
 
+    def to_dict(self):
+        """ Dictionary containing all key/values """
+
