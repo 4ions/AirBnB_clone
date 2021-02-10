@@ -27,14 +27,12 @@ class FileStorage:
             json.dump(my_dict, f)
 
     def reload(self):
+        
+        from models.base_model import BaseModel
         """ reaload """
         if not os.path.isfile(FileStorage.__file_path):
             return
         with open(FileStorage.__file_path, "r") as f:
-            new_dict = {}
-            new_dict = json.load(f)
-            for key, item in new_dict.items():
-                FileStorage.__objects[key] = item
-
-
-
+            test = json.load(f)
+        for key, item in test.items():
+            self.__objects[key] = BaseModel(**item)
