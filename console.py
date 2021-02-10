@@ -36,14 +36,14 @@ class HBNBCommand(cmd.Cmd):
         of an instance based on the class name and
         id
         """
+        class_list = ['BaseModel']
         if line == "":
             print("** class name missing **")
         else:
-            class_list = ['BaseModel']
             my_line = line.split()
             if my_line[0] not in class_list:
                 print("** class doesn't exist **")
-            if len(my_line) != 2:
+            elif len(my_line) != 2:
                 print("** instance id missing **")
             else:
                 try:
@@ -59,14 +59,19 @@ class HBNBCommand(cmd.Cmd):
         on the class name and id"""
         if line == "":
             print("** class name missing **")
-        class_list = ['BaseModel']
-        my_line = line.split()
-        if my_line[0] not in class_list:
-            print("** class doesn't exist **")
+        else:
+            class_list = ['BaseModel']
+            my_line = line.split()
+            if my_line[0] not in class_list:
+                print("** class doesn't exist **")
+            elif len(my_line) != 2:
+                print("** instance id missing **")
+            else:
+                try:
+                    print("ok")
+                except:
+                    print("** no instance found **")
 
-
-
-        
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
