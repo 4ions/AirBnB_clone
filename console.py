@@ -6,7 +6,7 @@ from models.base_model import BaseModel
 from models import storage
 
 class HBNBCommand(cmd.Cmd):
-
+    class_list = ['BaseModel']
     prompt = '(hbnb) '
 
     def do_quit(self, line):
@@ -36,18 +36,17 @@ class HBNBCommand(cmd.Cmd):
         of an instance based on the class name and
         id
         """
-        class_list = ['BaseModel']
         if line == "":
             print("** class name missing **")
         else:
             my_line = line.split()
-            if my_line[0] not in class_list:
+            if my_line[0] not in self.class_list:
                 print("** class doesn't exist **")
             elif len(my_line) != 2:
                 print("** instance id missing **")
             else:
                 try:
-                    key = str(my_line[0])+"."+str(my_line[1])
+                    key = "{}.{}".format(my_line[0], my_line[1])
                     all_objs = storage.all()
                     obj = all_objs[key]
                     print(obj)
@@ -59,18 +58,74 @@ class HBNBCommand(cmd.Cmd):
         on the class name and id"""
         if line == "":
             print("** class name missing **")
+            return
         else:
-            class_list = ['BaseModel']
             my_line = line.split()
-            if my_line[0] not in class_list:
+            if my_line[0] not in self.class_list:
                 print("** class doesn't exist **")
+                return
             elif len(my_line) != 2:
                 print("** instance id missing **")
+                return
             else:
                 try:
-                    print("ok")
+                    key = "{}.{}".format(my_line[0], my_line[1])
+                    obj = storage.all()
+                    obj.pop(key)
                 except:
                     print("** no instance found **")
+
+    def do_all(self, line):
+        #aqui va el codigo de cuando no pasan imprimir todo con nombre de clase
+
+        all_obj = storage.all()
+        if line in self.class_list:
+            for obj_id in all_obj:
+                obj = all_obj[obj_id]
+                if line == obj.__class__.__name__:
+                    print()
+                    print(obj)
+        elif line == "":
+            for obj_id in all_obj:
+                obj = all_obj[obj_id]
+                print(obj)
+        else:
+            print("** class doesn't exist **")
+
+    def do_update(self, line):
+        if line == "":
+            print("** class name missing **")
+            return
+        my_line = line.split()
+        all_objs = storage.all()
+        if my_line[0] not in self.class_list:
+            print("** class doesn't exist **")
+            return
+        if len(my_line) < 2:
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(my_line[0], my_line[1])
+        if key not in all_objs:
+            print("** no instance found **")
+            return
+        if len(my_line) < 3:
+            print("** attribute name missing **")
+            return
+        if len(my_line) < 4:
+            print("** value missing **")
+            return
+        obj = all_objs[key]
+        atr = my_line[2]
+        setattr(obj, atr, my_line[3])
+        all_objs[key].save()
+
+
+        
+        
+        
+        
+
+
 
 
 if __name__ == '__main__':

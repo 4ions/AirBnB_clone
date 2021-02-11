@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import json
+from models.base_model import BaseModel
 import os
 
 
@@ -27,12 +28,10 @@ class FileStorage:
             json.dump(my_dict, f)
 
     def reload(self):
-        
-        from models.base_model import BaseModel
         """ reaload """
         if not os.path.isfile(FileStorage.__file_path):
             return
         with open(FileStorage.__file_path, "r") as f:
             test = json.load(f)
         for key, item in test.items():
-            self.__objects[key] = BaseModel(**item)
+            self.__objects[key] = eval(item["__class__"])(**item)
