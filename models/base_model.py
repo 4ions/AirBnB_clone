@@ -9,7 +9,7 @@ class BaseModel:
     """ Class Base Model """
     
     def __init__(self, *args, **kwargs):
-        """ Init """
+        """ Init class BaseModel """
         if kwargs:
             for key, item in kwargs.items():
                 if key in ['created_at', 'updated_at']:
@@ -23,10 +23,12 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
+        """return string"""
         return "[{}] ({}) {}".\
             format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
+        """save the new class"""
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()

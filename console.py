@@ -11,7 +11,10 @@ from models.state import State
 from models.review import Review
 from models import storage
 
+"""after of import"""
+
 class HBNBCommand(cmd.Cmd):
+    """cmd class run command line"""
     class_list = ['BaseModel', 'User', 'Amenty', 'City', 'Place', 'State','Review']
     prompt = '(hbnb) '
 
@@ -42,6 +45,7 @@ class HBNBCommand(cmd.Cmd):
         of an instance based on the class name and
         id
         """
+        
         if line == "":
             print("** class name missing **")
         else:
@@ -84,8 +88,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
 
     def do_all(self, line):
-        #aqui va el codigo de cuando no pasan imprimir todo con nombre de clase
-
+        """print all in file file.json"""
         all_obj = storage.all()
         if line in self.class_list:
             for obj_id in all_obj:
@@ -101,6 +104,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, line):
+        """update a class"""
         if line == "":
             print("** class name missing **")
             return
