@@ -78,6 +78,8 @@ class HBNBCommand(cmd.Cmd):
                     key = "{}.{}".format(my_line[0], my_line[1])
                     obj = storage.all()
                     obj.pop(key)
+                    storage.save()
+
                 except:
                     print("** no instance found **")
 
