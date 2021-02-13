@@ -90,16 +90,17 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """print all in file file.json"""
         all_obj = storage.all()
+        my_list = []
         if line in self.class_list:
-            for obj_id in all_obj:
-                obj = all_obj[obj_id]
-                if line == obj.__class__.__name__:
-                    print()
+            for key, obj in all_obj.items():
+                if line in key:
                     print(obj)
+                    my_list.append(obj)
+            print(my_list)
         elif line == "":
-            for obj_id in all_obj:
-                obj = all_obj[obj_id]
-                print(obj)
+            for obj in all_obj.values():
+                my_list.append(obj)
+            print(my_list)
         else:
             print("** class doesn't exist **")
 
@@ -130,6 +131,47 @@ class HBNBCommand(cmd.Cmd):
         atr = my_line[2]
         setattr(obj, atr, my_line[3])
         all_objs[key].save()
+
+    def do_count(self, line):
+        count = 0
+        if line in HBNBCommand.class_list:
+            for obj in storage.all().values():
+                if line in obj.__class__.__name__:
+                    count +=1
+            print(count)
+        else:
+            return
+
+
+    def default(self, line):
+        """retrieve all instances of a clss by using:
+        <class name>.funtion()"""
+        my_line = line.split(".")
+        if my_line[0] in self.class_list:
+            try:
+                args = my_line[1].split("(")
+                if args[0] == "all":
+                    HBNBCommand.do_all(self, my_line[0])
+                elif args[0] == "count":
+                    HBNBCommand.do_count(self, my_line[0])
+                elif args[0] == "show":
+                    id_class = args[1]
+                    HBNBCommand.do_show(self, my_line[0] + " " + id_class[1:-2])
+                elif args[0] == "destroy":
+                    id_class = args[1]
+                    HBNBCommand.do_destroy(self, my_line[0] + " " + id_class[1:-2])
+                elif args[0] == "update":
+                    paramer = args[1].split(',')
+                    id_class = paramer[0].strip('"')
+                    dirt = paramer[1].split(':')
+                    name_atr = dirt[0].strip(" {'")
+                    value_atr = dirt[1].strip(' "})')
+                    HBNBCommand.do_update(self, my_line[0] + ' ' + id_class + ' ' + name_atr + ' ' + value_atr)
+            except:
+                print("*** Unknown syntax:", line)
+        else:
+            print("*** Unknown syntax:", line)
+
 
 
         
