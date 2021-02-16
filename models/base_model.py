@@ -7,7 +7,7 @@ import models
 
 class BaseModel:
     """ Class Base Model """
-    
+
     def __init__(self, *args, **kwargs):
         """ Init class BaseModel """
         if kwargs:
@@ -43,4 +43,3 @@ class BaseModel:
                 dictionary[key] = item
         dictionary['__class__'] = self.__class__.__name__
         return dictionary
-
