@@ -10,7 +10,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """ Init class BaseModel """
-        if kwargs:
+        if kwargs is not None and kwargs != {}:
             for key, item in kwargs.items():
                 if key in ['created_at', 'updated_at']:
                     item = datetime.strptime(str(item), "%Y-%m-%dT%H:%M:%S.%f")
