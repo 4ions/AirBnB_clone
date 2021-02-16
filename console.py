@@ -13,11 +13,13 @@ from models import storage
 
 """after of import"""
 
+
 class HBNBCommand(cmd.Cmd):
     """
     cmd class run command line
     """
-    class_list = ['BaseModel', 'User', 'Amenty', 'City', 'Place', 'State','Review']
+    class_list = ['BaseModel', 'User', 'Amenty',
+                  'City', 'Place', 'State', 'Review']
     prompt = '(hbnb) '
 
     def do_quit(self, line):
@@ -40,17 +42,17 @@ class HBNBCommand(cmd.Cmd):
         else:
             try:
                 new_base = eval(line)()
-                print(new_base.id) 
-                new_base.save()                  
+                print(new_base.id)
+                new_base.save()
             except:
                 print("** class doesnt exist **")
 
     def do_show(self, line):
-        """ Prints the string representation 
+        """ Prints the string representation
         of an instance based on the class name and
         id
         """
-        
+
         if line == "":
             print("** class name missing **")
         else:
@@ -69,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
 
     def do_destroy(self, line):
-        """Deletes an instance based 
+        """Deletes an instance based
         on the class name and id"""
         if line == "":
             print("** class name missing **")
@@ -143,11 +145,10 @@ class HBNBCommand(cmd.Cmd):
         if line in HBNBCommand.class_list:
             for obj in storage.all().values():
                 if line in obj.__class__.__name__:
-                    count +=1
+                    count += 1
             print(count)
         else:
             return
-
 
     def default(self, line):
         """retrieve all instances of a clss by using:
@@ -162,31 +163,25 @@ class HBNBCommand(cmd.Cmd):
                     HBNBCommand.do_count(self, my_line[0])
                 elif args[0] == "show":
                     id_class = args[1]
-                    HBNBCommand.do_show(self, my_line[0] + " " + id_class[1:-2])
+                    HBNBCommand.do_show
+                    (self, my_line[0] + " " + id_class[1:-2])
                 elif args[0] == "destroy":
                     id_class = args[1]
-                    HBNBCommand.do_destroy(self, my_line[0] + " " + id_class[1:-2])
+                    HBNBCommand.do_destroy
+                    (self, my_line[0] + " " + id_class[1:-2])
                 elif args[0] == "update":
                     paramer = args[1].split(',')
                     id_class = paramer[0].strip('"')
                     dirt = paramer[1].split(':')
                     name_atr = dirt[0].strip(" {'")
                     value_atr = dirt[1].strip(' "})')
-                    HBNBCommand.do_update(self, my_line[0] + ' ' + id_class + ' ' + name_atr + ' ' + value_atr)
+                    HBNBCommand.do_update
+                    (self, my_line[0] + ' ' + id_class +
+                        ' ' + name_atr + ' ' + value_atr)
             except:
                 print("*** Unknown syntax:", line)
         else:
             print("*** Unknown syntax:", line)
-
-
-
-        
-        
-        
-        
-
-
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
