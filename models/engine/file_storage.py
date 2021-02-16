@@ -29,18 +29,19 @@ class FileStorage:
 
     def reload(self):
         """ Deserializes json into a __objects """
-        if not os.path.isfile(FileStorage.__file_path):
-            return
-        with open(FileStorage.__file_path, "r") as f:
+        try:
+            with open(FileStorage.__file_path, "r") as f:
 
-            from models.base_model import BaseModel
-            from models.user import User
-            from models.amenity import Amenity
-            from models.city import City
-            from models.place import Place
-            from models.state import State
-            from models.review import Review
+                from models.base_model import BaseModel
+                from models.user import User
+                from models.amenity import Amenity
+                from models.city import City
+                from models.place import Place
+                from models.state import State
+                from models.review import Review
 
-            test = json.load(f)
-        for key, item in test.items():
-            self.__objects[key] = eval(item["__class__"])(**item)
+                test = json.load(f)
+            for key, item in test.items():
+                self.__objects[key] = eval(item["__class__"])(**item)
+        except IOError:
+            pass
