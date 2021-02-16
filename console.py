@@ -15,23 +15,22 @@ from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
-    """
-    cmd class run command line
-    """
+
+    """ cmd class run command line """
+
+    prompt = "(hbnb) "
+
     class_list = ['BaseModel', 'User', 'Amenty',
                   'City', 'Place', 'State', 'Review']
-    prompt = '(hbnb) '
 
     def do_quit(self, line):
+        """ Quit command to exit the program
         """
-        Quit command to exit the program
-         """
-        print()
         return True
 
     def do_EOF(self, line):
+        """ EFO
         """
-        EFO """
         print()
         return True
 
@@ -182,6 +181,11 @@ class HBNBCommand(cmd.Cmd):
                 print("*** Unknown syntax:", line)
         else:
             print("*** Unknown syntax:", line)
+
+    def emptyline(self):
+        """ When hit Enter
+        """
+        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
