@@ -14,7 +14,9 @@ from models import storage
 """after of import"""
 
 class HBNBCommand(cmd.Cmd):
-    """cmd class run command line"""
+    """
+    cmd class run command line
+    """
     class_list = ['BaseModel', 'User', 'Amenty', 'City', 'Place', 'State','Review']
     prompt = '(hbnb) '
 
@@ -133,6 +135,7 @@ class HBNBCommand(cmd.Cmd):
         all_objs[key].save()
 
     def do_count(self, line):
+        """count number of objs of this class"""
         count = 0
         if line in HBNBCommand.class_list:
             for obj in storage.all().values():
