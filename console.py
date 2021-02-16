@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """Deletes an instance based
         on the class name and id"""
-        if line == "":
+        if bool(line) is False:
             print("** class name missing **")
             return
         else:
@@ -136,7 +136,8 @@ class HBNBCommand(cmd.Cmd):
             return
         obj = all_objs[key]
         atr = my_line[2]
-        setattr(obj, atr, my_line[3])
+        value = my_line[3].strip('"')
+        setattr(obj, atr, value)
         all_objs[key].save()
 
     def do_count(self, line):
