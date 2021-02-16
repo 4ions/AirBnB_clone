@@ -2,7 +2,7 @@
 """ Module of Base class """
 import uuid
 from datetime import datetime
-import models
+from models import storage
 
 
 class BaseModel:
@@ -20,7 +20,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)
+            storage.new(self)
 
     def __str__(self):
         """return string"""
@@ -30,8 +30,7 @@ class BaseModel:
     def save(self):
         """save the new class"""
         self.updated_at = datetime.now()
-        models.storage.new(self)
-        models.storage.save()
+        storage.save()
 
     def to_dict(self):
         """ Dictionary containing all key/values """
