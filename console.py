@@ -95,20 +95,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """print all in file file.json"""
-        all_obj = storage.all()
-        my_list = []
-        if line in self.class_list:
-            for key, obj in all_obj.items():
-                if line in key:
-                    print(obj)
-                    my_list.append(obj)
-            print(my_list)
-        elif line == "":
-            for obj in all_obj.values():
-                my_list.append(obj)
-            print(my_list)
+        objects = storage.all()
+        _list = []
+        if line:
+            if line in self.class_list:
+                for key, v in objects.items():
+                    splitkey = key.split(".")
+                    if splitkey[0] == line:
+                        _list.append(str(v))
+            else:
+                print("** class doesn't exist **")
         else:
-            print("** class doesn't exist **")
+            for v in objects.values():
+                _list.append(str(v))
+        if _list != []:
+            print(_list)
 
     def do_update(self, line):
         """update a class"""
