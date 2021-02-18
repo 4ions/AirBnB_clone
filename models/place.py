@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """ module for place """
+
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
     """ Base class for place """
-
     city_id = ""
     user_id = ""
     name = ""
