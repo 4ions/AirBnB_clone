@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" console """
+""" Module of console """
 
 import shlex
 import cmd
@@ -15,6 +15,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models import storage
+
 
 class HBNBCommand(cmd.Cmd):
     """ class HBNB command line console """
@@ -196,8 +197,6 @@ class HBNBCommand(cmd.Cmd):
                 print("*** Unknown syntax:", line)
         else:
             print("*** Unknown syntax:", line)
-
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
